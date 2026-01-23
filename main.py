@@ -1,4 +1,6 @@
 import string
+import key_setup
+
 
 if __name__ == "__main__":
     print("running inside main.py")
@@ -9,8 +11,8 @@ if __name__ == "__main__":
     january_statement_filename = "january_statement.txt"
 
     # Initial key setup
-    month_keys = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-    name_keys  = ["Nicholas", "Yang"]
+    month_keys = key_setup.month_keys
+    name_keys  = key_setup.name_keys
 
     # Read input files
     with open(f"{text_input_path_base}\\{january_statement_filename}", "r") as f:
