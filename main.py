@@ -1,6 +1,6 @@
 import string
 import key_setup
-
+import token_parser
 
 if __name__ == "__main__":
     print("running inside main.py")
@@ -64,11 +64,8 @@ if __name__ == "__main__":
                 # If we find the posting date, do stuff
                 i_token = i_token + 2
 
-                while (i_token < len(tokens)) and (tokens[i_token] not in month_keys) and (tokens[i_token] not in name_keys):
-                    print(tokens[i_token])
-                    i_token = i_token + 1
-
-                print('found all information from this charge\n')
+                # Call the token parser and extract the rest of the transaction metadata
+                token_parser.extract_transaction_metadata(tokens, i_token, month_keys, name_keys)
 
         # Otherwise, keep looking for the initial statemnt charge
         else:
