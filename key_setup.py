@@ -6,6 +6,9 @@ month_keys = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 # Name keys
 name_keys  = ["Nicholas", "Yang"]
 
+# Expense type keys
+grocery_keys = ["wegmans", "target"]
+
 if __name__ == "__main__":
     print("running inside key_setup.py")
 
