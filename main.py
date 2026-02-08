@@ -1,12 +1,14 @@
 import string
 import key_setup
 import token_parser
+import os
+
 
 if __name__ == "__main__":
     print("running inside main.py")
 
     # Initial filepath setup
-    text_input_path_base        = "..\\MonthlyStatements"
+    text_input_path_base = os.path.join("..", "MonthlyStatements")
     test_file_name             = "test_file.txt"
     january_statement_filename = "january_statement.txt"
 
@@ -15,7 +17,8 @@ if __name__ == "__main__":
     name_keys    = key_setup.name_keys
   
     # Read input files
-    with open(f"{text_input_path_base}\\{january_statement_filename}", "r") as f:
+    input_path = os.path.join(text_input_path_base,january_statement_filename)
+    with open(input_path, "r") as f:
         content = f.read()
 
     print(content)
