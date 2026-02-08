@@ -89,5 +89,5 @@ def find_transaction_type(token_str):
 
 
     for key in grocery_keys:
-        if re.search(key, token_str):
+        if re.search(key, token_str): #the syntex is(substring, fullstring)
             print("type is grocery!")
