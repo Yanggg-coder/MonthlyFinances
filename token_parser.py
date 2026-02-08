@@ -83,11 +83,20 @@ def transaction_metadata(tokens,i_token,month_keys,name_keys):
     return i_token, charge_metadata
 
 def find_transaction_type(token_str):
-    
-    grocery_keys  = key_setup.grocery_keys
-    grocery_keys  = [g.lower() for g in grocery_keys]
+
+    categories = key_setup.getCategories()
+ 
+    # Search through the categories and find which
+    # type the transaction is:
+    for category, keys in categories.items():
+
+        # Search through each key in this categories keys
+        for key in keys:
+            if re.search(re.escape(key), token_str):
+                print(f"type is {category}!")
+                break
 
 
-    for key in grocery_keys:
-        if re.search(key, token_str): #the syntex is(substring, fullstring)
-            print("type is grocery!")
+
+
+
