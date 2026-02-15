@@ -36,9 +36,21 @@ if __name__ == "__main__":
  
     transaction_data_list = token_parser.extract_transaction_metadata(tokens,i_token)
 
+    total_amount = 0
     if transaction_data_list is not None:
 
         for idx, classData in enumerate(transaction_data_list):
+
+            # Print the data
             print(f"printing data for index {idx}")
             classData.printStatementData() # call the print funciton
             print("\n")
+
+            # Increment the total dollar amount
+            total_amount = total_amount + classData.charge_amount
+
+    print(f"the total amount for the statement is {total_amount}")
+
+
+
+

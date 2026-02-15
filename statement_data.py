@@ -10,7 +10,7 @@ class StatementData():
             transaction_day     = None,
             posting_month       = None,
             posting_day         = None,
-            charge_metadata     = None,
+            charge_amount       = None,
             category_type       = None
         ):
         
@@ -18,7 +18,7 @@ class StatementData():
         self.transaction_day    = transaction_day
         self.posting_month      = posting_month
         self.posting_day        = posting_day
-        self.charge_metadata    = charge_metadata
+        self.charge_amount      = charge_amount
         self.category_type      = category_type
 
 
