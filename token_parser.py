@@ -20,7 +20,7 @@ def extract_transaction_metadata(tokens, i_token,):
     posting_day       = 0
 
     # Transcation data struct list
-    transactin_data_list = []
+    transaction_data_list = []
 
     while i_token < len(tokens):
 
@@ -33,6 +33,7 @@ def extract_transaction_metadata(tokens, i_token,):
             transaction_day   = tokens[i_token + 1]
 
             # Increment by two and see if we can find the next charge
+            dataClass = None
             i_token = i_token + 2 
             if i_token < len(tokens) and tokens[i_token] in month_keys:
                 print('extract_transaction_metadata: found the second month token')
@@ -53,13 +54,20 @@ def extract_transaction_metadata(tokens, i_token,):
                 # After finding all the metadata, push back the information into a list
                 dataClass = statement_data.StatementData(transaction_month,transaction_day,posting_month,posting_day,charge_metadata,category_type)
 
-
+            if dataClass is not None:
+                transaction_data_list.append(dataClass)
 
         # Otherwise, keep looking for the initial statemnt charge
         else:
             i_token = i_token + 1
 
         print(f"extract_transaction_metadata: i_token = {i_token}")
+    
+    # If the length of the transaction data list is > 0, return it, else return None
+    if len(transaction_data_list) > 0:
+        return transaction_data_list
+    else:
+        return None
 
 
 def transaction_metadata(tokens,i_token,month_keys,name_keys,categories):
