@@ -1,6 +1,8 @@
 
 import key_setup
 import re
+import struct
+import statement_data
 
 def extract_transaction_metadata(tokens, i_token,):
 
@@ -16,6 +18,9 @@ def extract_transaction_metadata(tokens, i_token,):
     transaction_day   = 0
     posting_month     = ""
     posting_day       = 0
+
+    # Transcation data struct list
+    transactin_data_list = []
 
     while i_token < len(tokens):
 
@@ -44,6 +49,11 @@ def extract_transaction_metadata(tokens, i_token,):
 
                 # Call the token parser and extract the rest of the transaction metadata
                 i_token, charge_metadata, category_type = transaction_metadata(tokens, i_token, month_keys, name_keys, categories)
+
+                # After finding all the metadata, push back the information into a list
+                dataClass = statement_data.StatementData(transaction_month,transaction_day,posting_month,posting_day,charge_metadata,category_type)
+
+
 
         # Otherwise, keep looking for the initial statemnt charge
         else:

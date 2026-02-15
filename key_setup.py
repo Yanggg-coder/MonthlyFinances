@@ -1,11 +1,5 @@
 
 
-# Month keys
-month_keys = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-
-# Name keys
-name_keys  = ["Nicholas", "Yang"]
-
 
 # Month keys
 def getMonthKeys():
