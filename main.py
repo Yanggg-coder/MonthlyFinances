@@ -20,12 +20,12 @@ if __name__ == "__main__":
     with open(input_path, "r") as f:
         content = f.read()
 
-    print(content)
+    # print(content)
 
     # Remove newlines and split by spaces
     tokens = content.replace("\n", " ").split()
 
-    print(tokens)
+    # print(tokens)
 
     # Keep $ for amounts, strip everything else
     punctuation_to_strip = string.punctuation.replace('$', '')  # everything except $
