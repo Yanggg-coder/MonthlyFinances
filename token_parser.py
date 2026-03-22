@@ -2,7 +2,7 @@
 import key_setup
 import re
 
-def extract_transaction_metadata(tokens, i_token,):
+def extract_transaction_metadata(tokens, i_token):
 
     # Get the month keys and the name keys
     month_keys, name_keys = key_setup.getMonthKeys(), key_setup.getNameKeys()
@@ -62,7 +62,7 @@ def transaction_metadata(tokens,i_token,month_keys,name_keys,categories):
             print(f'transaction_metadata: {token}')
             print(f'transaction_metadata: {token[0]}')
         else:
-            print("transaction_metadata: token is empty \"\" ")
+            print('transaction_metadata: token is empty "" ')
             print(f'transaction_metadata: {token}')
             i_token = i_token + 1
             continue
@@ -71,14 +71,14 @@ def transaction_metadata(tokens,i_token,month_keys,name_keys,categories):
         if token[0] == "$":
             print("transaction_metadata: this token is a $")
             print(f'transaction_metadata: {token}')
-            i_token = i_token + 1
             charge_amount = float(token[1:].replace(",", ""))
             print(f"transaction_metadata: charge_metadata = {charge_amount}")
+            #i_token = i_token + 1
             break
         else:
             token_str.append(token)
-
-        i_token = i_token + 1
+            print(token_str)
+            i_token = i_token + 1
 
     token_str = "".join(token_str)
     print(f"transaction_metadata: token_str = {token_str}")
@@ -91,7 +91,7 @@ def transaction_metadata(tokens,i_token,month_keys,name_keys,categories):
 
 def find_transaction_type(token_str,categories):
 
-
+    stop_search = False
     # Search through the categories and find which
     # type the transaction is:
     for category, keys in categories.items():
@@ -100,9 +100,17 @@ def find_transaction_type(token_str,categories):
         for key in keys:
             if re.search(re.escape(key), token_str):
                 print(f"find_transaction_type: type is {category}!")
-                break
-
+                return category
     return category
+            
+
+        #         stop_search = True
+        #         break
+            
+
+        # if stop_search:
+        #     break
+    
 
 
 
