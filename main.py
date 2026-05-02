@@ -2,6 +2,7 @@ import string
 import key_setup
 import token_parser
 import os
+import checking
 
 
 if __name__ == "__main__":
@@ -25,11 +26,18 @@ if __name__ == "__main__":
 
     print(tokens)
 
-    # Keep $ for amounts, strip everything else
+    # Keep $ for amounts, replace everything else to nothing then
+    # strip everything else
     punctuation_to_strip = string.punctuation.replace('$', '')  # everything except $
     tokens     = [t.lower().strip(punctuation_to_strip) for t in tokens]
 
     # Setup token index
     i_token = 0
  
-    token_parser.extract_transaction_metadata(tokens,i_token)
+    transaction_output = token_parser.extract_transaction_metadata(tokens,i_token)
+
+    checking.total_checking(transaction_output)
+
+
+
+

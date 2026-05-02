@@ -1,13 +1,6 @@
 
 
 # Month keys
-month_keys = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-
-# Name keys
-name_keys  = ["Nicholas", "Yang"]
-
-
-# Month keys
 def getMonthKeys():
     month_keys = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     month_keys = [m.lower() for m in month_keys]
@@ -87,6 +80,7 @@ def getCategories():
                     "gym": getGymKeys(),
                     }
     return categories
+
 
 
 if __name__ == "__main__":
