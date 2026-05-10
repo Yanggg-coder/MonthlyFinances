@@ -1,25 +1,25 @@
 import token_parser
 
 #charged_amount = 0
-def total_checking(dictionary_list):
+def total_checking(transaction_dictionary):
 
     charged_amount = 0
 
-    for dictionary_i in dictionary_list:
+    for dictionary_i in transaction_dictionary:
         
-        print(dictionary_i["description"])
-        print(dictionary_i["amount"])
+        # print(dictionary_i["description"])
+        # print(dictionary_i["amount"])
 
-        if dictionary_i["description"] == 'capital one mobile pymt':
-            dictionary_i["amount"] = -dictionary_i["amount"]
-        else:
-            dictionary_i["amount"]
+        # if dictionary_i["description"] == 'capital one mobile pymt':
+        #     dictionary_i["amount"] = 0
+        # else:
+        #     dictionary_i["amount"]
 
         previous_amount = dictionary_i["amount"]
         
         charged_amount = charged_amount + previous_amount
         
-        print(f"Charged Amount {charged_amount}")
+        # print(f"Charged Amount {charged_amount}")
 
     print(f"Total Charged Amount: {charged_amount}")
     return charged_amount

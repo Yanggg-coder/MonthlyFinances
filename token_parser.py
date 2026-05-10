@@ -2,7 +2,7 @@
 import key_setup
 import re
 
-def extract_transaction_metadata(tokens, i_token):
+def extract_transaction_metadata_capital_one_statements(tokens, i_token):
 
     # Get the month keys and the name keys
     month_keys, name_keys = key_setup.getMonthKeys(), key_setup.getNameKeys()
@@ -77,6 +77,12 @@ def extract_transaction_metadata(tokens, i_token):
 
                 print(f"transaction dictionary: {transaction}")
 
+                if transaction["description"] == 'capitalonemobilepymt':
+                    transaction["amount"] = 0
+                
+                else:
+                    transaction["amount"]
+
                 transactions.append(transaction)
 
         # Otherwise, keep looking for the initial statemnt charge
@@ -85,9 +91,100 @@ def extract_transaction_metadata(tokens, i_token):
 
         print(f"extract_transaction_metadata: i_token = {i_token}")
 
-    print(f"final transactions:{transactions}")
+    print(f"final transactions:{transactions} \nThis is the output from function extract_transaction_metadata, which is being called from the main.py")
     return transactions
 
+def extract_transaction_metadata_navy_federal_credit_union_statements(tokens, i_token):
+
+    # Get the month keys and the name keys
+    month_keys, name_keys, month_map = key_setup.getMonthKeys(), key_setup.getNameKeys(), key_setup.getMonthMap()
+
+    # Get the categories dictionary
+    categories = key_setup.getCategories()
+    print("now in token_parser file: Print the categories like grocery, " \
+    "household, travel and so on as well as the companies in the cetegory. -- ")
+    print('categories:')
+    print(categories)
+    #category, keys = categories.items():
+
+    print("now print item and keys individually")
+    for item, key in categories.items():
+        print(item,key)
+        print(item)
+    print(item)
+
+    # return
+    # Setup transaction metadata to save off 
+    transaction_month = ""
+    transaction_day   = 0
+    posting_month     = ""
+    posting_day       = 0
+
+    transactions = []
+
+    while i_token < len(tokens):
+        
+        # Extract the current token
+        token_i =  tokens[i_token]
+        print(token_i)
+
+        # Check if the current token has a date format
+        if re.fullmatch(r"\d{2}/\d{2}/\d{2}",token_i):
+            
+            # Extract the transaction date information
+            transaction_month = token_i[0:2]
+            print(type(transaction_month))
+            print(transaction_month)
+            transaction_month = month_map[transaction_month]
+            transaction_day   = token_i[3:5]
+            tran_date = transaction_month + ' ' + transaction_day
+
+            # Increment the token counter by one
+            i_token = i_token + 1
+
+            # Extract the current token
+            token_i =  tokens[i_token]
+
+            # Check if the current token has a date format
+            if re.fullmatch(r"\d{2}/\d{2}/\d{2}",token_i):
+
+                # Extract the posting date information
+                posting_month = token_i[0:2]
+                posting_month = month_map[posting_month]
+                posting_day   = token_i[3:5]
+                post_date = posting_month + ' ' + posting_day
+
+                # Increment the token counter by one
+                i_token = i_token + 1
+
+                # Call the token parser and extract the rest of the transaction metadata            
+                i_token, token_str, charge_metadata, category_type = transaction_metadata(tokens, i_token, month_keys, name_keys, categories)
+
+                transaction = {
+                    "transaction_date": tran_date,
+                    "post_date": post_date,
+                    "description": token_str,
+                    "amount": charge_metadata,
+                    "category": category_type
+
+                }
+
+                print(f"transaction dictionary: {transaction}")
+
+                if re.search("paymentreceived",transaction["description"]):
+                    transaction["amount"] = 0
+                
+                else:
+                    transaction["amount"]
+
+                transactions.append(transaction)
+
+        # Otherwise, keep looking for the initial statemnt charge
+
+        else:
+            i_token = i_token + 1
+
+    return transactions
 
 def transaction_metadata(tokens,i_token,month_keys,name_keys,categories):
 
@@ -117,7 +214,7 @@ def transaction_metadata(tokens,i_token,month_keys,name_keys,categories):
             print(token_str)
             i_token = i_token + 1
 
-    token_str = " ".join(token_str)
+    token_str = "".join(token_str)
     print(f"transaction_metadata: token_str = {token_str}")
 
     category_type = find_transaction_type(token_str,categories)
@@ -139,6 +236,9 @@ def find_transaction_type(token_str,categories):
            if re.search(re.escape(key), token_str):
                print(f"find_transaction_type: type is {category}!")
                return category
+    
+    print(f"Can't find category for this transaction information {token_str}. There is no key matchs.")
+    return f"unknow key {token_str}"          
 
 
 
